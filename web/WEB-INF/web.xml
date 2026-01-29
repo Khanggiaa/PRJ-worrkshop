@@ -17,6 +17,11 @@
     </servlet>
     
     <servlet>
+        <servlet-name>CreateController</servlet-name>
+        <servlet-class>controller.CreateController</servlet-class>
+    </servlet>
+    
+    <servlet>
         <servlet-name>SearchController</servlet-name>
         <servlet-class>controller.SearchController</servlet-class>
     </servlet>
@@ -49,6 +54,11 @@
     <servlet-mapping>
         <servlet-name>LogoutController</servlet-name>
         <url-pattern>/LogoutController</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>CreateController</servlet-name>
+        <url-pattern>/CreateController</url-pattern>
     </servlet-mapping>
     
     <servlet-mapping>
