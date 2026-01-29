@@ -61,4 +61,25 @@ public class CartDAO {
         }
         return list;
     }
+    
+    // Xóa sản phẩm khỏi giỏ hàng
+    public boolean delete(String userID, String productID) throws Exception {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                String sql = "DELETE FROM tblCart WHERE userID=? AND productID=?";
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, userID);
+                ptm.setString(2, productID);
+                check = ptm.executeUpdate() > 0;
+            }
+        } finally {
+            if (ptm != null) ptm.close();
+            if (conn != null) conn.close();
+        }
+        return check;
+    }
 }

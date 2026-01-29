@@ -2,30 +2,41 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Your Shopping Cart</title>
-    <style>
-        table { border-collapse: collapse; width: 80%; }
-        th, td { border: 1px solid black; padding: 10px; text-align: left; }
-        .total { font-weight: bold; color: blue; }
-    </style>
-</head>
-<body>
-    <h1>Giỏ hàng của <%= ((model.UserDTO)session.getAttribute("LOGIN_USER")).getFullName() %></h1>
-    
-    <%
-        List<CartDTO> list = (List<CartDTO>) request.getAttribute("CART_LIST");
-        if (list != null && !list.isEmpty()) {
-    %>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Your Shopping Cart</title>
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 80%;
+            }
+            th, td {
+                border: 1px solid black;
+                padding: 10px;
+                text-align: left;
+            }
+            .total {
+                font-weight: bold;
+                color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Giỏ hàng của <%= ((model.UserDTO) session.getAttribute("LOGIN_USER")).getFullName()%></h1>
+
+        <%
+            List<CartDTO> list = (List<CartDTO>) request.getAttribute("CART_LIST");
+            if (list != null && !list.isEmpty()) {
+        %>
         <table>
             <thead>
                 <tr>
-                    <th>STT</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Đơn giá</th>
-                    <th>Số lượng</th>
-                    <th>Thành tiền</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,26 +48,33 @@
                         total += subtotal;
                 %>
                 <tr>
-                    <td><%= count++ %></td>
-                    <td><%= item.getProduct().getName() %></td>
-                    <td><%= item.getProduct().getPrice() %></td>
-                    <td><%= item.getQuantity() %></td>
-                    <td><%= subtotal %></td>
+                    <td><%= count++%></td>
+                    <td><%= item.getProduct().getName()%></td>
+                    <td><%= item.getProduct().getPrice()%></td>
+                    <td><%= item.getQuantity()%></td>
+                    <td><%= subtotal%></td>
+                    <td>
+                        <a href="CartController?action=Remove&id=<%= item.getProduct().getId()%>" 
+                           onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này không?');"
+                           style="color: red; text-decoration: none;">
+                            Xóa
+                        </a>
+                    </td>
                 </tr>
-                <% } %>
+                <% }%>
                 <tr>
-                    <td colspan="4" align="right" class="total">Tổng cộng:</td>
-                    <td class="total"><%= total %></td>
+                    <td colspan="4" align="right" class="total">Total Price:</td>
+                    <td class="total"><%= total%></td>
                 </tr>
             </tbody>
         </table>
-    <%
+        <%
         } else {
-    %>
+        %>
         <h3>Giỏ hàng của bạn đang trống!</h3>
-    <% } %>
-    
-    <br/>
-    <a href="MainController?action=Search&search=">Tiếp tục mua sắm</a>
-</body>
+        <% }%>
+
+        <br/>
+        <a href="MainController?action=Search&search=">Tiếp tục mua sắm</a>
+    </body>
 </html>

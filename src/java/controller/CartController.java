@@ -19,7 +19,7 @@ public class CartController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = "MainController?action=Search&search="; // Mặc định quay lại danh sách
-
+        
         try {
             HttpSession session = request.getSession();
             UserDTO loginUser = (UserDTO) session.getAttribute("LOGIN_USER");
@@ -37,36 +37,29 @@ public class CartController extends HttpServlet {
             if ("AddToCart".equals(action)) {
                 // 2. Xử lý thêm sản phẩm vào giỏ hàng trong DB
                 String productID = request.getParameter("id");
-
-                // Lấy số lượng từ tham số request, mặc định là 1 nếu lỗi hoặc không có
-                int quantity = 1;
-                try {
-                    String quantityRaw = request.getParameter("quantity");
-                    if (quantityRaw != null && !quantityRaw.isEmpty()) {
-                        quantity = Integer.parseInt(quantityRaw);
-                        // Đảm bảo số lượng luôn dương
-                        if (quantity < 1) {
-                            quantity = 1;
-                        }
-                    }
-                } catch (NumberFormatException e) {
-                    log("Invalid quantity format: " + e.toString());
-                    quantity = 1; // Fallback về 1 nếu parse lỗi
-                }
-
-                // Gọi DAO để thêm vào DB
+                int quantity = 1; // Mặc định mỗi lần bấm là +1
+                
                 boolean check = dao.addToCart(loginUser.getUserID(), productID, quantity);
-
                 if (check) {
-                    request.setAttribute("MESSAGE", "Đã thêm " + quantity + " sản phẩm " + productID + " vào giỏ hàng thành công!");
+                    request.setAttribute("MESSAGE", "Đã thêm " + productID + " vào giỏ hàng thành công!");
                 } else {
                     request.setAttribute("ERROR", "Không thể thêm sản phẩm vào giỏ hàng.");
                 }
+                
             } else if ("ViewCart".equals(action)) {
-                // 3. Xử lý lấy danh sách giỏ hàng từ DB để hiển thị
+                // ... (giữ nguyên logic cũ) ...
                 List<CartDTO> cartList = dao.getCart(loginUser.getUserID());
                 request.setAttribute("CART_LIST", cartList);
                 url = "viewCart.jsp";
+                
+            } else if ("Remove".equals(action)) {
+                // [NEW] Xử lý xóa sản phẩm
+                String productID = request.getParameter("id");
+                dao.delete(loginUser.getUserID(), productID);
+                
+                // Sau khi xóa, gọi lại hành động ViewCart để cập nhật danh sách
+                // Dùng sendRedirect hoặc forward về chính Controller với action=ViewCart
+                url = "CartController?action=ViewCart";
             }
 
         } catch (Exception e) {
