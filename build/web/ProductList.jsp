@@ -41,7 +41,7 @@
 
         <%-- User mới hiện Cart --%>
         <% if (isUser) { %>
-        <h3><a href="viewCart.jsp">View Cart</a></h3>
+        <h3><a href="CartController?action=ViewCart">View Cart</a></h3>
         <% } %>
 
         <% } else { %>
