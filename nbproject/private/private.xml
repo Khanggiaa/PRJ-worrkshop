@@ -4,7 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Rabuno/Documents/NetBeansProjects/InventoryManagement/src/java/controller/MainController.java</file>
-            <file>file:/C:/Users/Rabuno/Documents/NetBeansProjects/InventoryManagement/src/java/controller/CreateController.java</file>
+            <file>file:/C:/Users/Rabuno/Documents/NetBeansProjects/InventoryManagement/src/java/controller/CartController.java</file>
+            <file>file:/C:/Users/Rabuno/Documents/NetBeansProjects/InventoryManagement/web/ProductList.jsp</file>
+            <file>file:/C:/Users/Rabuno/Documents/NetBeansProjects/InventoryManagement/src/java/model/CartDAO.java</file>
+            <file>file:/C:/Users/Rabuno/Documents/NetBeansProjects/InventoryManagement/web/viewCart.jsp</file>
             <file>file:/C:/Users/Rabuno/Documents/NetBeansProjects/InventoryManagement/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/Rabuno/Documents/NetBeansProjects/InventoryManagement/web/updateProduct.jsp</file>
         </group>
